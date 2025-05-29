@@ -1,0 +1,494 @@
+/* ===================== */
+/* RESET GERAL */
+/* ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+/* Fonte nos cards de elenco */
+.jogador-nome {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Fonte nos títulos de posições do elenco */
+.posicao h2 {
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+/* Fonte no título principal da página de títulos */
+.titulo-principal {
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+/* Fonte nos subtítulos de categorias da página de títulos */   
+.categoria h2 {
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+/* Fonte nos cards de títulos */
+.titulo {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+/* ===================== */
+/* FUNDO POR PÁGINA */
+/* ===================== */
+
+/* Fundo da Index */
+.pagina-index {
+    background: url('https://assets.goal.com/images/v3/bltaf9f27b311723918/1dc74839ae8786c8b6709bd4f4975b9807eae06f.jpg?auto=webp&format=pjpg&width=3840&quality=60') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Fundo da Elenco */
+.pagina-elenco {
+    background: url('https://www.eusoutimao.com.br/image/eusoutimaocombr/elenco-do-corinthians-foto-instagram-1740790800-hq.webp') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Fundo da Títulos */
+.pagina-titulos {
+    background: url('https://identidadecorinthiana.com/wp-content/uploads/2023/05/rivalidades-temp.webp') no-repeat center center fixed;
+    background-size: cover;
+}
+.pagina-fiel {
+    background: url('https://nadinegrandino.wordpress.com/wp-content/uploads/2012/05/timc3a3o-5.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+.pagina-identidade {
+    background: url('https://cdn.meutimao.com.br/fotos-do-corinthians/w941/2023/05/28/torcida_do_corinthians_levanta_faixa_de_nao_ao_cjll.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+.pagina-jornada {
+    background: url('https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2023/05/corinthians-campanha-lgbt-1-e1684345850421.png?w=1080 ') no-repeat center center fixed;
+    background-size: cover;
+}
+.pagina-historia {
+    background:url('https://wallpapercave.com/wp/wp1834934.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* ===================== */
+/* OVERLAY ESCURO */
+/* ===================== */
+.overlay {
+    background-color: rgba(0, 0, 0, 0.85); 
+    min-height: 100%;
+}
+
+
+/* ===================== */
+/* CABEÇALHO (HEADER + NAV) */
+/* ===================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: black;
+    border-bottom: 3px solid #fff;
+    margin-bottom: 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 60px;
+    margin-right: 15px;
+}
+
+.logo h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 2.5em;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #888585;
+    transition: 0.3s all;
+}
+
+/* ===================== */
+/* HERO DA INDEX (Texto principal de boas-vindas) */
+/* ===================== */
+.hero {
+    text-align: center;
+    padding: 60px 20px 30px 20px;
+    color: #fff;
+    text-shadow: 2px 2px 8px #7c7474;
+}
+
+.hero h1 {
+    font-size: 3.8em;
+    font-family: 'Permanent Marker', cursive;
+    letter-spacing: 2px;
+}
+
+.hero p {
+    font-family: 'Caveat', cursive;
+    font-size: 2.2em;
+    margin-top: 15px;
+    font-weight: bold;
+}
+.hero-titulos {
+    padding-top: 60px; /* igual à index */
+    padding-bottom: 30px; /* igual à index */
+}
+
+/* ===================== */
+/* CARDS (Index) */
+/* ===================== */
+.highlights {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.card {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.5));
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    width: 280px;
+    padding: 20px;
+    box-shadow: 0 0 15px #ffffff88;
+    color: #fff;
+    transition: transform 0.3s, background 0.3s;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    backdrop-filter: blur(2px);
+}
+
+.card h4 {
+    font-size: 1.4em;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.card p {
+    color: #ffffff;
+    text-align: center;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    background-color: #c8c8c4c1;
+}
+
+/* ===================== */
+/* BOTÕES CHAMADA PARA AÇÃO */
+/* ===================== */
+.btn-cta {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.btn-cta:hover {
+    background-color: rgba(255, 255, 255, 1);
+    transform: scale(1.05);
+}
+
+/* ===================== */
+/* ELENCO (Jogadores) */
+/* ===================== */
+/* Agrupa cada posição como uma linha */
+.posicao {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.jogadores {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.jogador {
+    text-align: center;
+    width: 150px;
+}
+
+.jogador img {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.jogador img:hover {
+    transform: scale(1.05);
+}
+
+
+
+/* Responsividade Elenco */
+@media (max-width: 600px) {
+    .jogadores {
+        justify-content: center;
+    }
+    .jogador {
+        width: 90px;
+    }
+}
+
+/* ===================== */
+/* TÍTULOS (Página Títulos) */
+/* ===================== */
+.titulo-principal {
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    text-align: center;
+    margin-top: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.titulos-categorias {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 30px;
+}
+
+.categoria h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    color: #ffffff;
+    font-size: 28px;
+    border-bottom: 2px solid #5a5a5a;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.titulos-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.titulo {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(50, 50, 50, 0.6));
+    padding: 15px 25px; /* Espaçamento interno um pouco menor */
+    min-width: 220px; /* Largura mínima um pouco reduzida */
+    min-height: 80px; /* Altura um pouco reduzida */
+    font-size: 17px; /* Fonte um pouco menor */
+    border: 2px solid #ffffff;
+    border-radius: 10px; /* Cantos um pouco menos arredondados */
+    transition: all 0.3s ease;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: break-word;
+}
+
+
+.titulo:hover {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0.3));
+    transform: scale(1.05);
+    border-color: #ffffff;
+}
+
+/* ===================== */
+/* IMAGENS ESPECIAIS (Highlight e Símbolos) */
+/* ===================== */
+.symbol-overlay {
+    position: relative;
+    max-width: 600px;
+    margin: 40px auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-image {
+    width: 100%;
+    border-radius: 10px;
+    opacity: 0.7;
+}
+
+.logo-overlay {
+    position: absolute;
+    width: 180px;
+    opacity: 0.5;
+    filter: invert(100%) grayscale(100%);
+    pointer-events: none;
+}
+
+.highlight-img {
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    margin: 30px auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgb(255, 255, 255);
+    transition: transform 0.3s ease;
+}
+
+.highlight-img:hover {
+    transform: scale(1.02);
+}
+
+/* ===================== */
+/* RODAPÉ */
+/* ===================== */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #ccc;
+    font-size: 0.9em;
+    margin-top: 60px;
+    border-top: 2px solid #fff;
+}
+
+/* ===================== */
+/* Animações Especiais */
+/* ===================== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.fade-in.appear {
+    opacity: 1;
+    transform: translateY(0);
+}
+.content {
+    text-align: center;
+}
+.tab-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(51, 51, 51, 0.8));
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+.tab-btn:hover {
+    background: linear-gradient(to right, rgba(34, 34, 34, 0.9), rgba(85, 85, 85, 0.9));
+    transform: scale(1.05);
+}
+
+
+.tab-content {
+    display: none;
+    padding: 40px 20px;
+    border-top: 2px solid #fff;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.fundo-preto {
+    background-color: #111;
+    color: white;
+}
+
+.fundo-branco {
+    background-color: #fff;
+    color: black;
+}
+.galeria-abas {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.galeria-abas img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.galeria-abas img:hover {
+    transform: scale(1.05);
+}
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1em;
+}
+/* AJUSTE EXCLUSIVO PARA O QUIZ */
+.pagina-quiz,
+.pagina-quiz .overlay {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.pagina-quiz .content {
+    flex: 1;
+}
+
+

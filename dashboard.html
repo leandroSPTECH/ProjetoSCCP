@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - Corinthians</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="pagina-index">
+  <div class="overlay">
+    <header>
+      <div class="logo">
+        <img src="https://cdn.meutimao.com.br/_upload/forumtopico/2022/05/26/escudo_2.jpg" alt="Logo Corinthians">
+        <h1>Dashboard</h1>
+      </div>
+      <nav>
+        <ul class="menu">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="quiz.html">Quiz</a></li>
+          <li><a href="grafico.html">Cadastros</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="content">
+      <h2>Total de Usuários</h2>
+      <p id="totalUsuarios" style="font-size: 24px; font-weight: bold;"></p>
+
+      <h2>Cadastros por Dia</h2>
+      <canvas id="cadastrosChart" width="600" height="300"></canvas>
+      <h2>Média de Acertos por Usuário</h2>
+<canvas id="mediaAcertosChart" width="600" height="300"></canvas>
+
+    </section>
+
+
+    <footer>
+      <p>&copy; 2025 Corinthians | Dashboard de dados</p>
+    </footer>
+  </div>
+
+  <script>
+    // Total de usuários
+    fetch('http://localhost:3000/total-usuarios')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('totalUsuarios').innerText = `${data.total} usuários cadastrados`;
+      });
+
+    // Cadastros por dia
+    fetch('http://localhost:3000/estatisticas')
+      .then(res => res.json())
+      .then(data => {
+        const labels = data.map(item => item.data);
+        const valores = data.map(item => item.total);
+
+        new Chart(document.getElementById('cadastrosChart'), {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Cadastros por dia',
+              data: valores,
+              borderColor: 'blue',
+              backgroundColor: 'lightblue',
+              tension: 0.3,
+              fill: true
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  precision: 0
+                }
+              }
+            }
+          }
+        });
+      });
+  </script>
+</body>
+</html>

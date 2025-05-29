@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Gráfico de Cadastros</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="pagina-index">
+  <div class="overlay">
+    <header>
+      <div class="logo">
+        <img src="https://cdn.meutimao.com.br/_upload/forumtopico/2022/05/26/escudo_2.jpg" alt="Logo Corinthians">
+        <h1>Corinthians</h1>
+      </div>
+      <nav>
+        <ul class="menu">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="quiz.html">Quiz</a></li>
+          <li><a href="elenco.html">Elenco</a></li>
+          <li><a href="grafico.html">Gráfico</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="content">
+      <h1>Cadastros por Dia</h1>
+      <canvas id="graficoCadastros" width="600" height="300"></canvas>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Corinthians | Dados de cadastros</p>
+    </footer>
+  </div>
+
+  <script>
+    fetch('http://localhost:3000/estatisticas')
+      .then(res => res.json())
+      .then(data => {
+        const labels = data.map(item => item.data);
+        const valores = data.map(item => item.total);
+
+        new Chart(document.getElementById('graficoCadastros'), {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Cadastros',
+              data: valores,
+              backgroundColor: 'rgba(54, 162, 235, 0.7)'
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  precision: 0
+                }
+              }
+            }
+          }
+        });
+      });
+  </script>
+</body>
+</html>
