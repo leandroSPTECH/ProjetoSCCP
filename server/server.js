@@ -2,18 +2,21 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
-const app = express();
 const path = require('path');
+const app = express();
 
-app.use(express.static('C:/Users/lilia/Documents/ProjetoSCCP/public'));
-app.use('/css', express.static(path.join(__dirname, '../public/css')));
 app.use(cors());
 app.use(bodyParser.json());
 
+// Servir arquivos estáticos
+app.use(express.static('C:/Users/lilia/Documents/ProjetoSCCP/public'));
+app.use('/css', express.static(path.join(__dirname, '../public/css')));
+
+// Conexão com MySQL
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '@Corinthians1910', 
+  password: '@Corinthians1910',
   database: 'corinthians_site'
 });
 
@@ -22,19 +25,7 @@ db.connect(err => {
   console.log("Conectado ao MySQL");
 });
 
-// Cria tabela se não existir
-db.query(`
-  CREATE TABLE IF NOT EXISTS usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100),
-    cpf VARCHAR(14),
-    email VARCHAR(100) UNIQUE,
-    senha VARCHAR(255),
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  )
-`);
-
-// Cadastro simples
+// Cadastro de usuário
 app.post('/usuarios', (req, res) => {
   const { nome, cpf, email, senha } = req.body;
 
@@ -49,6 +40,7 @@ app.post('/usuarios', (req, res) => {
     });
 });
 
+// Login
 app.post('/login', (req, res) => {
   const { email, senha } = req.body;
 
@@ -64,6 +56,7 @@ app.post('/login', (req, res) => {
     });
 });
 
+// Estatísticas por data de cadastro
 app.get('/estatisticas', (req, res) => {
   const sql = `
     SELECT DATE(criado_em) AS data, COUNT(*) AS total
@@ -77,21 +70,22 @@ app.get('/estatisticas', (req, res) => {
   });
 });
 
+// Total de usuários
 app.get('/total-usuarios', (req, res) => {
   db.query('SELECT COUNT(*) AS total FROM usuarios', (err, results) => {
     if (err) return res.status(500).send(err);
     res.json(results[0]);
   });
 });
-app.post('/salvar-resultados', (req, res) => {
+
+// Salvar resultados do quiz
+app.post('/salvar-resultado', (req, res) => {
   const { email, acertos, total, respostas } = req.body;
 
-  // 1. Encontrar ID do usuário
   db.query('SELECT id FROM usuarios WHERE email = ?', [email], (err, results) => {
     if (err || results.length === 0) return res.status(500).send('Usuário não encontrado');
     const usuario_id = results[0].id;
 
-    // 2. Inserir em resultados_quiz
     db.query(
       'INSERT INTO resultados_quiz (usuario_id, acertos, total, respostas) VALUES (?, ?, ?, ?)',
       [usuario_id, acertos, total, JSON.stringify(respostas)],
@@ -100,7 +94,6 @@ app.post('/salvar-resultados', (req, res) => {
 
         const resultado_id = result.insertId;
 
-        // 3. Inserir individualmente cada resposta na tabela respostas
         const values = respostas.map((correta, i) => [resultado_id, i + 1, correta ? 'certa' : 'errada', correta]);
 
         db.query(
@@ -116,10 +109,7 @@ app.post('/salvar-resultados', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("API rodando em http://localhost:3000");
-});
-
+// Média de acertos por pergunta
 app.get('/media-pergunta', (req, res) => {
   db.query('SELECT respostas FROM resultados_quiz WHERE respostas IS NOT NULL', (err, results) => {
     if (err) {
@@ -150,4 +140,8 @@ app.get('/media-pergunta', (req, res) => {
     const medias = corretas.map((c, i) => totais[i] ? c / totais[i] : 0);
     res.json({ medias });
   });
+});
+
+app.listen(3000, () => {
+  console.log("API rodando em http://localhost:3000");
 });
