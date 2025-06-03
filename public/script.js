@@ -92,7 +92,7 @@ document.getElementById('loginForm')?.addEventListener('submit', function (e) {
     window.location.href = 'index.html';
   })
   .catch(err => {
-    console.error('Erro no login:', err);
+    console.error('Erro no login:', erro);
     alert('E-mail ou senha incorretos.');
   });
 });
@@ -182,6 +182,7 @@ const perguntas = [
 
 let indice = 0;
 let acertos = 0;
+let respostasUsuario = [];
 
 function carregarPergunta() {
   const p = perguntas[indice];
@@ -201,7 +202,12 @@ function carregarPergunta() {
 
 function verificarResposta(escolha) {
   const correta = perguntas[indice].resposta;
-  if (escolha === correta) acertos++;
+  if (escolha === correta) {
+  acertos++;
+  respostasUsuario.push(true);
+} else {
+  respostasUsuario.push(false);
+}
   document.querySelectorAll('#opcoes button').forEach(btn => btn.disabled = true);
   document.getElementById('proxima').style.display = 'inline-block';
 }
@@ -214,48 +220,113 @@ document.getElementById('proxima')?.addEventListener('click', () => {
   } else {
     // Salva o resultado do quiz no banco
 const emailSalvo = localStorage.getItem('emailLogin') || 'anônimo';
-
-
 fetch('http://localhost:3000/salvar-resultado', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
     email: emailSalvo,
     acertos: acertos,
-    total: perguntas.length
+    total: perguntas.length,
+    respostas: respostasUsuario
   })
+})
+.then(res => {
+  if (res.ok) {
+    alert(`Você acertou ${acertos} de ${perguntas.length} perguntas.`);
+    window.location.href = 'dashboard.html';
+  } else {
+    alert('Erro ao salvar resultado.');
+  }
+})
+.catch(() => alert('Erro ao conectar com o servidor.'));
+  }
 });
-    document.getElementById('quiz-container').innerHTML = `
-      <h2>Você acertou ${acertos} de ${perguntas.length} perguntas!</h2>
-      <canvas id="graficoResultado" width="400" height="300"></canvas>
-    `;
-    const erros = perguntas.length - acertos;
-    new Chart(document.getElementById('graficoResultado'), {
+
+// Apenas se estiver na página da dashboard
+if (document.getElementById('graficoMediaPorPergunta')) {
+
+  // Total de usuários
+  fetch('http://localhost:3000/total-usuarios')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('totalUsuarios').innerText = data.total;
+    });
+
+  // Gráfico de cadastros por dia
+  fetch('http://localhost:3000/estatisticas')
+    .then(res => res.json())
+    .then(data => {
+      const labels = data.map(item => item.data);
+      const valores = data.map(item => item.total);
+
+      new Chart(document.getElementById('cadastrosChart'), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Cadastros por dia',
+            data: valores,
+            borderColor: 'blue',
+            backgroundColor: 'lightblue',
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0 }
+            }
+          }
+        }
+      });
+    });
+
+  // Gráfico: Média de acertos por pergunta
+fetch('http://localhost:3000/media-pergunta')
+  .then(res => res.json())
+  .then(dados => {
+    const medias = dados.medias;
+    console.log("Médias:", medias);
+    const ctx = document.getElementById('graficoMediaPorPergunta').getContext('2d');
+    new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Acertos', 'Erros'],
+        labels: medias.map((_, i) => `Pergunta ${i + 1}`),
         datasets: [{
-          label: 'Resultado do Quiz',
-          data: [acertos, erros],
-          backgroundColor: ['green', 'red']
+          label: 'Média de acertos (%)',
+          data: medias.map(m => m * 100), // Converter para porcentagem
+          backgroundColor: 'rgba(255, 206, 86, 0.6)',
+          borderColor: 'rgba(255, 206, 86, 1)',
+          borderWidth: 1
         }]
       },
       options: {
         scales: {
           y: {
             beginAtZero: true,
-            ticks: { precision: 0 }
+            ticks: { color: '#fff', callback: value => value + '%' }
+          },
+          x: {
+            ticks: { color: '#fff' }
           }
+        },
+        plugins: {
+          legend: { labels: { color: '#fff' } }
         }
       }
     });
-  }
-});
-
-if (document.getElementById('quiz-container')) {
-  carregarPergunta();
+  })
+  .catch(err => {
+    console.error('Erro ao buscar média por pergunta:', err);
+  });
 }
 
 
+// Inicia o quiz carregando a primeira pergunta ao abrir a página
+if (document.body.classList.contains('pagina-quiz')) {
+  carregarPergunta();
+}
 
 

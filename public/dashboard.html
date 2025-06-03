@@ -3,83 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <title>Dashboard - Corinthians</title>
+   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+ <link rel="stylesheet" href="css/dashboard.css">
+
+  <script>
+    if (!localStorage.getItem('emailLogin')) {
+      alert('Você precisa estar logado para acessar a dashboard.');
+      window.location.href = 'login.html';
+    }
+  </script>
 </head>
+
 <body class="pagina-index">
   <div class="overlay">
+    <!-- Header igual ao index -->
     <header>
-      <div class="logo">
+      <div class="logo">  
         <img src="https://cdn.meutimao.com.br/_upload/forumtopico/2022/05/26/escudo_2.jpg" alt="Logo Corinthians">
-        <h1>Dashboard</h1>
+        <h1>Corinthians</h1>
       </div>
       <nav>
         <ul class="menu">
           <li><a href="index.html">Início</a></li>
           <li><a href="quiz.html">Quiz</a></li>
-          <li><a href="grafico.html">Cadastros</a></li>
-          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="elenco.html">Elenco</a></li>
+          <li><a href="titulos.html">Títulos</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="cadastro.html">Cadastrar</a></li>
         </ul>
       </nav>
     </header>
 
+    <!-- Conteúdo da Dashboard -->
     <section class="content">
-      <h2>Total de Usuários</h2>
-      <p id="totalUsuarios" style="font-size: 24px; font-weight: bold;"></p>
+      <h2 style="color: white;">Dashboard de Estatísticas</h2>
+      <div class="kpi" style="background: white; padding: 15px; margin-bottom: 20px;">
+        <strong>Total de usuários:</strong> <span id="totalUsuarios">--</span>
+      </div>
 
-      <h2>Cadastros por Dia</h2>
+      <h3 style="color: white;">Cadastros por dia</h3>
       <canvas id="cadastrosChart" width="600" height="300"></canvas>
-      <h2>Média de Acertos por Usuário</h2>
-<canvas id="mediaAcertosChart" width="600" height="300"></canvas>
 
+      <h3 style="color: white;">Média geral de acertos por pergunta</h3>
+      <canvas id="graficoMediaPorPergunta" width="600" height="300"></canvas>
     </section>
 
-
+    <!-- Footer igual ao index -->
     <footer>
-      <p>&copy; 2025 Corinthians | Dashboard de dados</p>
+      <p>&copy; 2025 Corinthians | Feito com alma corinthiana</p>
     </footer>
   </div>
 
-  <script>
-    // Total de usuários
-    fetch('http://localhost:3000/total-usuarios')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('totalUsuarios').innerText = `${data.total} usuários cadastrados`;
-      });
-
-    // Cadastros por dia
-    fetch('http://localhost:3000/estatisticas')
-      .then(res => res.json())
-      .then(data => {
-        const labels = data.map(item => item.data);
-        const valores = data.map(item => item.total);
-
-        new Chart(document.getElementById('cadastrosChart'), {
-          type: 'line',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Cadastros por dia',
-              data: valores,
-              borderColor: 'blue',
-              backgroundColor: 'lightblue',
-              tension: 0.3,
-              fill: true
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: {
-                  precision: 0
-                }
-              }
-            }
-          }
-        });
-      });
-  </script>
 </body>
 </html>
